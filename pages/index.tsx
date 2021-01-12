@@ -11,13 +11,22 @@ type Props = {
 
 export default class IndexPage extends React.Component<Props, {}> {
 
+  bgImage = "";
+  componentDidMount() {
+    this.bgImage = this.props.items.length == 0 ? `url(https://source.unsplash.com/${window.screen.width}x${window.screen.height}/?calm)` : "";
+    this.forceUpdate();
+  }
+
   render() {
+     
     return <Layout title="startpage" description="Startpage">
-      <div className="entirepage">
+      <div className="entirepage" style={{
+        backgroundImage: this.bgImage
+      }}>
         <div className="todoholder">
           {
             this.props.items.map(i =>
-              <Todo key={i?.id} task={i} />
+              <Todo key={i?.id} task={i}/>
             )
           }
         </div>
