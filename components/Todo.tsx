@@ -11,17 +11,11 @@ export default class IndexPage extends React.Component<{
   constructor(props: any) {
     super(props);
     // Don't call this.setState() here!
-    const match = new RegExp(/([^\s]+) \((.+)\)$/g).exec(props.task.content);
-    let contentUrl : string|undefined;
-    if(match)
-    {
-      props.task.content = match[2];
-      contentUrl = match[1];
-    }
+    
 
     this.state = { 
       completed: false,
-      contentUrl
+      contentUrl: undefined
     };
   }
 
@@ -49,10 +43,26 @@ export default class IndexPage extends React.Component<{
     }
   }
 
+  componentDidUpdate() {
+    const match = new RegExp(/([^\s]+) \((.+)\)$/g).exec(this.props.task.content);
+    if (match && this.state.contentUrl != match[1]) {
+      this.setState({
+        contentUrl: match[1]
+      });
+    }
+  }
+
   render() {
+    let text: string|JSX.Element = this.props.task.content;
+
+    const match = new RegExp(/([^\s]+) \((.+)\)$/g).exec(this.props.task.content);
+    if (match) {
+      text = match[2];
+    }
+
     return <div onClick={(ev) => this.clicked(ev)} className={"todoitem " + (this.state.completed ? "completed" : "")}>
       <span className="checkbox">{this.state.completed ? "☑" : "☐"}</span>
-      <span className="todotext">{this.props.task.content}</span>
+      <span className="todotext">{text}</span>
     </div>
   }
 }
