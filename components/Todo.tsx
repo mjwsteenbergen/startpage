@@ -10,10 +10,8 @@ export default class IndexPage extends React.Component<{
 
   constructor(props: any) {
     super(props);
-    console.log(props.task.content);
     // Don't call this.setState() here!
     const match = new RegExp(/([^\s]+) \((.+)\)$/g).exec(props.task.content);
-    console.log(match);
     let contentUrl : string|undefined;
     if(match)
     {
@@ -27,7 +25,7 @@ export default class IndexPage extends React.Component<{
     };
   }
 
-  clicked(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  async clicked(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if(ev.ctrlKey)
     {
       window.open(this.state.contentUrl ?? this.props.task.url)
@@ -36,7 +34,18 @@ export default class IndexPage extends React.Component<{
     {
       this.setState({
         completed: !this.state.completed
-      })
+      });
+
+      const extra = this.state.completed ? "un" : "";
+      var resp = await fetch(location.origin + "/api/" + extra + "complete?id=" + this.props.task.id, {
+        method: "POST",
+      });
+      if (!resp.ok) {
+        resp.json().then((obj) =>{
+          throw new Error(resp.statusText + "\n" + obj.message);
+
+        })
+      }
     }
   }
 
