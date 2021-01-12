@@ -19,6 +19,13 @@
     --title-font: 'Geometria', 'Geometria-light', sans-serif;
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+}
+
 h1,
 h2,
 h3 {
