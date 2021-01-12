@@ -13,7 +13,7 @@ export default class IndexPage extends React.Component<Props, {}> {
 
   bgImage = "";
   componentDidMount() {
-    this.bgImage = this.props.items.length == 0 ? `url(https://source.unsplash.com/${window.screen.width}x${window.screen.height}/?calm)` : "";
+    this.bgImage = this.props.items.length == 0 ? `url(https://source.unsplash.com/${window.screen.width}x${window.screen.height}/daily/)` : "";
     this.forceUpdate();
   }
 
