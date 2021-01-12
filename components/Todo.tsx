@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { TodoistTask } from 'todoist-rest-api';
 
 export default class IndexPage extends React.Component<{
@@ -17,7 +17,6 @@ export default class IndexPage extends React.Component<{
     let contentUrl : string|undefined;
     if(match)
     {
-      console.log(match[0]);
       props.task.content = match[2];
       contentUrl = match[1];
     }

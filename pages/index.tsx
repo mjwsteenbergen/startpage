@@ -46,8 +46,6 @@ export const getServerSideProps: GetStaticProps = async (context) => {
     filter: "@today | today"
   });
 
-  console.log(items);
-
   return {
     props: { items },
   };
