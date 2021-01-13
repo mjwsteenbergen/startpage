@@ -1,5 +1,6 @@
 import React from 'react'
 import { TodoistTask } from 'todoist-rest-api';
+import { TodoistBackend } from '../pages';
 
 export default class IndexPage extends React.Component<{
   task: TodoistTask,
@@ -31,15 +32,7 @@ export default class IndexPage extends React.Component<{
       });
 
       const extra = this.state.completed ? "un" : "";
-      var resp = await fetch(location.origin + "/api/" + extra + "complete?id=" + this.props.task.id, {
-        method: "POST",
-      });
-      if (!resp.ok) {
-        resp.json().then((obj) =>{
-          throw new Error(resp.statusText + "\n" + obj.message);
-
-        })
-      }
+      TodoistBackend.Call("/api/" + extra + "complete?id=" + this.props.task.id);
     }
   }
 

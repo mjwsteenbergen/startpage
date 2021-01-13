@@ -18,7 +18,7 @@ export default class IndexPage extends React.Component<{}, {
 
   componentDidMount() {
     if (process.browser) {
-      ItemsStore.GetItems((items) => {
+      TodoistBackend.GetItems((items) => {
         this.setState({
           items: items
         });
@@ -48,22 +48,39 @@ export default class IndexPage extends React.Component<{}, {
   }
 }
 
-class ItemsStore {
+export class TodoistBackend {
+
+  public static async Call<T>(endpoint:string): Promise<T>
+  {
+    let url = new URL(location.origin + endpoint);
+
+    let token = localStorage.getItem("todoist-token");
+    if(token == null)
+    {
+      throw new Error("Please add your token in localstorage");
+    }
+
+    url.searchParams.append("token", token);
+
+    const resp = await fetch(url.toString());
+    if (resp.ok) {
+      return (await resp.json()) as unknown as T;
+    } else {
+      let obj = await resp.json();
+      throw new Error(resp.statusText + "\n" + obj?.message);
+    }
+  }
 
   public static GetItems(func: (tasks: TodoistTask[])=>void) {
     let cacheItems = JSON.parse(localStorage.getItem("items-cache") || "[]") as TodoistTask[];
     
     func(cacheItems);
 
-    fetch(location.origin + "/api/items").then(i => {
-      if (i.ok) {
-        return i.json();
-      }
-      throw new Error(i.statusText);
-    }).then(i => {
+    this.Call<TodoistTask[]>("/api/items").then(i => {
       func(i);
       localStorage.setItem("items-cache", JSON.stringify(i));
     });
-
   }
+
+
 }

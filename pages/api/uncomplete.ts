@@ -4,7 +4,7 @@ import todoist from 'todoist-rest-api';
 const handler =async (_req: NextApiRequest, res: NextApiResponse) => {
 
     try {
-        const token = _req.cookies["token"];
+        const token = _req.query["token"] as string;
         if (token == undefined) {
             throw new Error("please provide a token")
         }

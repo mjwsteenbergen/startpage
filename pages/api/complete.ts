@@ -4,12 +4,12 @@ import todoist from 'todoist-rest-api';
 const handler =async (_req: NextApiRequest, res: NextApiResponse) => {
 
     try {
-        const token = _req.cookies["token"];
+        const token = _req.query["token"] as string;
         if (token == undefined) {
             throw new Error("please provide a token")
         }
 
-        let td = todoist(token || "");
+        let td = todoist(token);
         await td.v1.task.close(Number.parseInt(_req.query["id"] as string));
 
         res.status(200).json({});
