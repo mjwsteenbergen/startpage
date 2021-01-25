@@ -9,10 +9,15 @@ const handler =async (_req: NextApiRequest, res: NextApiResponse) => {
             throw new Error("please provide a token")
         }
 
+        const filter = _req.query["filter"] as string;
+        if (filter == undefined) {
+            throw new Error("please provide a token")
+        }
+
         let td = todoist(token || "");
 
         let items = await td.v1.task.findAll({
-            filter: "@today | today"
+            filter
         });
 
         res.status(200).json(items);

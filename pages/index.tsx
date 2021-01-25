@@ -76,7 +76,13 @@ export class TodoistBackend {
     
     func(cacheItems);
 
-    this.Call<TodoistTask[]>("/api/items").then(i => {
+    const filter = localStorage.getItem("filter");
+    if(filter == null)
+    {
+      throw new Error("Please add your filter in localstorage");
+    }
+
+    this.Call<TodoistTask[]>("/api/items?filter=" + filter).then(i => {
       func(i);
       localStorage.setItem("items-cache", JSON.stringify(i));
     });
