@@ -1,11 +1,11 @@
 import React from 'react'
-import { TodoistTask } from 'todoist-rest-api'
 import Layout from '../components/Layout'
 import Todo from '../components/Todo'
+import { TodoistTaskE } from './api/items';
 
 
 export default class IndexPage extends React.Component<{}, {
-  items: TodoistTask[]
+  items: TodoistTaskE[]
 }> {
 
   constructor(props: any) {
@@ -71,8 +71,8 @@ export class TodoistBackend {
     }
   }
 
-  public static GetItems(func: (tasks: TodoistTask[])=>void) {
-    let cacheItems = JSON.parse(localStorage.getItem("items-cache") || "[]") as TodoistTask[];
+  public static GetItems(func: (tasks: TodoistTaskE[])=>void) {
+    let cacheItems = JSON.parse(localStorage.getItem("items-cache") || "[]") as TodoistTaskE[];
     
     func(cacheItems);
 
@@ -82,7 +82,7 @@ export class TodoistBackend {
       throw new Error("Please add your filter in localstorage");
     }
 
-    this.Call<TodoistTask[]>("/api/items?filter=" + filter).then(i => {
+    this.Call<TodoistTaskE[]>("/api/items?filter=" + filter).then(i => {
       func(i);
       localStorage.setItem("items-cache", JSON.stringify(i));
     });

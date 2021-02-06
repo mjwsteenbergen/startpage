@@ -1,9 +1,9 @@
 import React from 'react'
-import { TodoistTask } from 'todoist-rest-api';
 import { TodoistBackend } from '../pages';
+import { TodoistTaskE } from '../pages/api/items';
 
 export default class IndexPage extends React.Component<{
-  task: TodoistTask,
+  task: TodoistTaskE,
 }, {
   completed: boolean,
   contentUrl?: string,
@@ -54,7 +54,9 @@ export default class IndexPage extends React.Component<{
     }
 
     return <div onClick={(ev) => this.clicked(ev)} className={"todoitem " + (this.state.completed ? "completed" : "")}>
-      <span className="checkbox">{this.state.completed ? "☑" : "☐"}</span>
+      <span className="checkbox" style={{
+        color: this.props.task.color
+      }}>{this.state.completed ? "☑" : "☐"}</span>
       <span className="todotext">{text}</span>
     </div>
   }

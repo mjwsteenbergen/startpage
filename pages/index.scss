@@ -50,6 +50,12 @@ body {
 
 .todoholder {
     max-width: 75vw;
+    padding-top: 150px;
+    padding-bottom: 150px;
+
+    &:not(:hover) .checkbox {
+        color: inherit !important;
+    }
 }
 
 .todoitem {
@@ -65,8 +71,14 @@ body {
         margin-block-start: -5px;
     }
 
+    
+
     &.completed {
         color: lightgrey;
+
+        .checkbox {
+            color: lightgrey !important;
+        }
         
         .todotext {
             text-decoration: line-through;
