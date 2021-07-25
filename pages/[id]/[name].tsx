@@ -12,7 +12,7 @@ type iBS = {
     items: TodoistTaskE[]
 };
 
-const ProjectPage = ({ itemsBySections, project_id, project_name }: { itemsBySections: iBS[], project_id: number, project_name: string }) => {
+const ProjectPage = ({ itemsBySections, project_url, project_name }: { itemsBySections: iBS[], project_url: string, project_name: string }) => {
     
 
     let bgImage = "";
@@ -36,7 +36,7 @@ const ProjectPage = ({ itemsBySections, project_id, project_name }: { itemsBySec
                 )}
             </div>
         </div>
-        <a className="ext" href={"https://todoist.com/app/project/" + project_id}>Open in todoist</a>
+        <a className="ext" href={project_url}>Open in todoist</a>
     </Layout>
 }
 
@@ -84,12 +84,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         items: items.filter(i => i.section_id === 0)
     });
 
-    console.log(itemsBySections);
+    console.log(project);
 
     return {
         props: {
             itemsBySections,
-            project_id: projectId,
+            project_url: project.url,
             project_name: project.name
         }
     }

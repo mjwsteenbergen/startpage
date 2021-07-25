@@ -1,6 +1,7 @@
 import React from 'react'
 import { TodoistTaskE } from '../pages/api/items';
 import ReactMarkdown from 'react-markdown'
+import gfm from 'remark-gfm';
 
 
 export default class IndexPage extends React.Component<{
@@ -56,8 +57,8 @@ export default class IndexPage extends React.Component<{
       <span className="checkbox" style={{
         color: this.props.task.color
       }}>{this.state.completed ? "☑" : "☐"}</span>
-      <span className="todo-text"><ReactMarkdown>{this.props.task.content as string}</ReactMarkdown></span>
-      <span className="todo-description"><ReactMarkdown>{this.props.task.description as string}</ReactMarkdown></span>
+      <span className="todo-text"><ReactMarkdown remarkPlugins={[gfm]}>{this.props.task.content as string}</ReactMarkdown></span>
+      <span className="todo-description"><ReactMarkdown remarkPlugins={[gfm]}>{this.props.task.description as string}</ReactMarkdown></span>
     </div>
   }
 }
