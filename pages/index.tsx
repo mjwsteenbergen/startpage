@@ -39,7 +39,10 @@ export default class IndexPage extends React.Component<{}, {
         <div className="todoholder">
           {
             this.state.items.map(i =>
-              <Todo key={i?.id} task={i}/>
+              <Todo key={i?.id} task={i} onComplete={(completed) => {
+                const extra = completed ? "un" : "";
+                TodoistBackend.Call("/api/" + extra + "complete?id=" + i.id);
+              } }/>
             )
           }
         </div>

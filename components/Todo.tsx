@@ -1,9 +1,11 @@
 import React from 'react'
-import { TodoistBackend } from '../pages';
 import { TodoistTaskE } from '../pages/api/items';
+import ReactMarkdown from 'react-markdown'
+
 
 export default class IndexPage extends React.Component<{
   task: TodoistTaskE,
+  onComplete?: (completed: boolean) => void
 }, {
   completed: boolean,
   contentUrl?: string,
@@ -21,9 +23,14 @@ export default class IndexPage extends React.Component<{
   }
 
   async clicked(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    if ((ev.target as any).nodeName === "A")
+    {
+      return;
+    }
+
     if(ev.ctrlKey)
     {
-      window.open(this.state.contentUrl ?? this.props.task.url)
+      window.open(this.props.task.url)
     }
     else
     {
@@ -31,33 +38,26 @@ export default class IndexPage extends React.Component<{
         completed: !this.state.completed
       });
 
-      const extra = this.state.completed ? "un" : "";
-      TodoistBackend.Call("/api/" + extra + "complete?id=" + this.props.task.id);
+      this.props.onComplete?.apply(this, [this.state.completed ]);
     }
   }
 
   componentDidUpdate() {
-    const match = new RegExp(/([^\s]+) \((.+)\)$/g).exec(this.props.task.content);
-    if (match && this.state.contentUrl != match[1]) {
+    const match = new RegExp(/\[([^\]]+)\]\(([^\)]+)\)/g).exec(this.props.task.content);
+    if (match && this.state.contentUrl != match[2]) {
       this.setState({
-        contentUrl: match[1]
+        contentUrl: match[2]
       });
     }
   }
 
   render() {
-    let text: string|JSX.Element = this.props.task.content;
-
-    const match = new RegExp(/([^\s]+) \((.+)\)$/g).exec(this.props.task.content);
-    if (match) {
-      text = match[2];
-    }
-
     return <div onClick={(ev) => this.clicked(ev)} className={"todoitem " + (this.state.completed ? "completed" : "")}>
       <span className="checkbox" style={{
         color: this.props.task.color
       }}>{this.state.completed ? "☑" : "☐"}</span>
-      <span className="todotext">{text}</span>
+      <span className="todo-text"><ReactMarkdown>{this.props.task.content as string}</ReactMarkdown></span>
+      <span className="todo-description"><ReactMarkdown>{this.props.task.description as string}</ReactMarkdown></span>
     </div>
   }
 }

@@ -32,6 +32,14 @@ h3 {
     font-family: var(--title-font);
 }
 
+h1 {
+    padding: 0;
+    margin: 0;
+    padding-top: 50px;
+    font-size: 60pt;
+    color: grey;
+}
+
 body {
     font-family     : 'Inter';
     background-color: rgb(254, 254, 254);
@@ -48,8 +56,16 @@ body {
     justify-content: center;
 }
 
+.ext  {
+    color: lightgray;
+    position: fixed;
+    text-decoration: none;
+    bottom: 25px;
+    right: 25px;
+}
+
 .todoholder {
-    max-width: 75vw;
+    width: 75vw;
     padding-top: 150px;
     padding-bottom: 150px;
 
@@ -59,16 +75,54 @@ body {
 }
 
 .todoitem {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+
+    justify-items: flex-start;
 
     overflow: hidden;
     word-wrap: break-word;
 
-    font-size: 60pt;
 
     .checkbox {
         padding-right: 10px;
         margin-block-start: -5px;
+        font-size: 60pt;
+    }
+
+    .todo-text {
+        grid-row: 1/1;
+        grid-column: 2/2;
+        justify-self: flex-start;
+
+        font-weight: 500;
+
+        font-size: 60pt;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .todo-description {
+        grid-row: 2/2s;
+        grid-column: 2/2;
+        
+        font-size: 20pt;
+        color:rgb(80, 80, 80);
+
+        
+    }
+
+    .todo-description,.todo-text {
+        p {
+            margin: 0;
+        }
+
+        a {
+            color: inherit;
+        }
     }
 
     
@@ -80,8 +134,12 @@ body {
             color: lightgrey !important;
         }
         
-        .todotext {
+        .todo-text {
             text-decoration: line-through;
+        }
+
+        .todo-description {
+            color: lightgrey;
         }
     }
     
