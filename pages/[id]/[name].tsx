@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import todoist from 'todoist-rest-api';
 import Layout from '../../components/Layout';
 import Todo from '../../components/Todo';
@@ -7,7 +7,7 @@ import { TodoistTaskE } from '../api/items';
 import { GetServerSideProps } from 'next';
 
 type iBS = {
-    name?: string,
+    name?: string | null,
     order: number,
     items: TodoistTaskE[]
 };
