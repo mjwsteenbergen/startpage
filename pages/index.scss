@@ -64,7 +64,7 @@ body {
     right: 25px;
 }
 
-.todoholder {
+.todo-holder {
     width: 75vw;
     padding-top: 150px;
     padding-bottom: 150px;
@@ -143,4 +143,39 @@ body {
         }
     }
     
+}
+
+@media (max-width: 720px) {
+    h1 {
+        font-size: 50pt;
+    }
+
+    .todo-holder {
+        // width: 90vw;
+        padding-top: 10vh;
+        padding-bottom: 10vh;
+    }
+
+    .entirepage {
+        padding-top: 0;
+        padding-bottom: 0;
+        min-height: inherit;
+        max-width: 100vw;
+        overflow: hidden;
+    }
+
+    .todoitem {
+        .checkbox {
+            font-size: 16pt;
+        }
+
+        .todo-text {
+            font-size: 16pt;
+        }
+
+        .todo-description {
+            font-size: 12pt;
+        }
+
+    }
 }

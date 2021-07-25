@@ -23,7 +23,7 @@ const ProjectPage = ({ itemsBySections, project_url, project_name }: { itemsBySe
         <div className="entirepage" style={{
             backgroundImage: bgImage
         }}>
-            <div className="todoholder">
+            <div className="todo-holder">
                 {itemsBySections.sort(i => i.order).filter(section => section.items.length > 0).map(section => 
                     <div>
                         <h1>{section.name}</h1>

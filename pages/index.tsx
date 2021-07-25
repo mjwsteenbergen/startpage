@@ -36,7 +36,7 @@ export default class IndexPage extends React.Component<{}, {
       <div className="entirepage" style={{
         backgroundImage: bgImage
       }}>
-        <div className="todoholder">
+        <div className="todo-holder">
           {
             this.state.items.map(i =>
               <Todo key={i?.id} task={i} onComplete={(completed) => {
